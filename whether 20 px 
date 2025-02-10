@@ -1,0 +1,42 @@
+
+     <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: #87CEEB; padding: 20px; }
+        .container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); width: 300px; margin: auto; }
+        input, button { padding: 10px; margin: 10px 0; width: 100%; border: 1px solid #ccc; border-radius: 5px; }
+        button { background: #007BFF; color: white; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .weather-info { margin-top: 10px; font-size: 18px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🌤️ Weather App</h2>
+        <input type="text" id="city" placeholder="Enter city">
+        <button onclick="getWeather()">Get Weather</button>
+        <p id="weather"></p>
+    </div>
+
+    <script>
+        async function getWeather() {
+            let city = document.getElementById("city").value;
+            let apiKey = "YOUR_API_KEY"; // Replace with your OpenWeatherMap API key
+            let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+            
+            try {
+                let response = await fetch(url);
+                let data = await response.json();
+                document.getElementById("weather").innerText = 
+                    data.cod === 200 ? `🌡️ ${data.main.temp}°C - ${data.weather[0].description}` : "❌ City not found!";
+            } catch {
+                document.getElementById("weather").innerText = "⚠️ Error fetching weather!";
+            }
+        }
+    </script>
+</body>
+</html>           
